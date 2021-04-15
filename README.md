@@ -3,11 +3,14 @@
 ## Running Requirements
 > JDK 11
 
-## How to build and run (without IDE)
+## How to build (without IDE)
 > Download this project, execute following commands :
 <pre><code>./gradlew bootJar
-cd build/libs
-java -jar matrix-1.0.0.jar
+</code></pre>
+
+## How to run
+> After successfully build, you can find an executable jar in build/libs directory, execute following command to start our application:
+<pre><code>java -jar matrix-1.0.0.jar
 </code></pre>
 
 ## We can test it
