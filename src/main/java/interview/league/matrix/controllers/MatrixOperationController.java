@@ -22,6 +22,11 @@ public class MatrixOperationController {
     private static final String COMMA_DELIMITER = ",";
     private static final String CSV_EXTENSION = "csv";
 
+    private static final String INPUT_FILE_DESC = "A csv file that contains a matrix, " +
+            "has any dimension where the number of rows are equal to the number of columns (square). \n " +
+            "Each value is an integer, and there is no header row. \n " +
+            "An example likes following: \n 1,2,3\n4,5,6\n7,8,9";
+
     private List<String> getRecordFromLine(String line) {
         List<String> values = new ArrayList<>();
         try (Scanner rowScanner = new Scanner(line)) {
@@ -89,9 +94,8 @@ public class MatrixOperationController {
 
     @PostMapping("/echo")
     @ApiOperation(value = "Echo operation: Return the matrix as a string in matrix format.")
-    public String echo(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                           @RequestParam("file")
-                           MultipartFile file, HttpServletResponse response) throws IOException {
+    public String echo(@ApiParam(value = INPUT_FILE_DESC) @RequestParam("file") MultipartFile file,
+                       HttpServletResponse response) throws IOException {
         Matrix matrix = checkValidationAndParse(file, response);
         if(matrix == null) {
             return null;
@@ -101,8 +105,8 @@ public class MatrixOperationController {
 
     @PostMapping("/invert")
     @ApiOperation(value = "Invert operation: Return the matrix as a string in matrix format where the columns and rows are inverted.")
-    public String invert(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                             @RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public String invert(@ApiParam(value = INPUT_FILE_DESC) @RequestParam("file") MultipartFile file,
+                         HttpServletResponse response) throws IOException {
         Matrix matrix = checkValidationAndParse(file, response);
         if(matrix == null) {
             return null;
@@ -112,8 +116,8 @@ public class MatrixOperationController {
 
     @PostMapping("/flatten")
     @ApiOperation(value = "Flatten operation: Return the matrix as a 1 line string, with values separated by commas.")
-    public String flatten(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                              @RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public String flatten(@ApiParam(value = INPUT_FILE_DESC) @RequestParam("file") MultipartFile file,
+                          HttpServletResponse response) throws IOException {
         Matrix matrix = checkValidationAndParse(file, response);
         if(matrix == null) {
             return null;
@@ -123,8 +127,8 @@ public class MatrixOperationController {
 
     @PostMapping("/sum")
     @ApiOperation(value = "Sum operation: Return the sum of the integers in the matrix.")
-    public String sum(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                          @RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public String sum(@ApiParam(value = INPUT_FILE_DESC) @RequestParam("file") MultipartFile file,
+                      HttpServletResponse response) throws IOException {
         Matrix matrix = checkValidationAndParse(file, response);
         if(matrix == null) {
             return null;
@@ -134,24 +138,12 @@ public class MatrixOperationController {
 
     @PostMapping("/multiply")
     @ApiOperation(value = "Multiply operation: Return the product of the integers in the matrix.")
-    public String multiply(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                               @RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public String multiply(@ApiParam(value = INPUT_FILE_DESC) @RequestParam("file") MultipartFile file,
+                           HttpServletResponse response) throws IOException {
         Matrix matrix = checkValidationAndParse(file, response);
         if(matrix == null) {
             return null;
         }
         return matrix.multiply();
-    }
-
-
-    @PostMapping("/all")
-    @ApiOperation(value = "All operation: Return all results of matrix operations.")
-    public String all(@ApiParam(value = "A csv file that contains a matrix, has any dimension where the number of rows are equal to the number of columns (square). \n Each value is an integer, and there is no header row. \n An example likes following: \n 1,2,3\n4,5,6\n7,8,9")
-                          @RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
-        Matrix matrix = checkValidationAndParse(file, response);
-        if(matrix == null) {
-            return null;
-        }
-        return matrix.all();
     }
 }
